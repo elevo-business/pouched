@@ -1,0 +1,46 @@
+<section class="section" style="background:{{ section.settings.bg }}">
+  <div class="wrap">
+    {%- if section.settings.heading != blank -%}
+      <div class="center" data-reveal style="margin-bottom:44px"><h2 class="h2">{{ section.settings.heading }}</h2></div>
+    {%- endif -%}
+    <div class="feat3">
+      {%- for block in section.blocks -%}
+        <div class="f" data-reveal {{ block.shopify_attributes }}>
+          {%- case block.settings.icon -%}
+            {%- when 'card' -%}<svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            {%- when 'charge' -%}<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+            {%- when 'flat' -%}<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+            {%- when 'hand' -%}<svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-4 0M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8a7 7 0 0 0 14 0v-3"/></svg>
+            {%- when 'shield' -%}<svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4-3 7-7 9-4-2-7-5-7-9V7z"/></svg>
+            {%- else -%}<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          {%- endcase -%}
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Icon features",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FCEFEA" }
+  ],
+  "blocks": [
+    { "type": "feature", "name": "Feature", "settings": [
+      { "type": "select", "id": "icon", "label": "Icon", "default": "card", "options": [
+        { "value": "card", "label": "Card" }, { "value": "charge", "label": "Charging" }, { "value": "flat", "label": "Flat" },
+        { "value": "hand", "label": "Hand" }, { "value": "shield", "label": "Shield" }, { "value": "check", "label": "Check" } ] },
+      { "type": "text", "id": "title", "label": "Title", "default": "Bis zu 4 Karten" },
+      { "type": "text", "id": "text", "label": "Text", "default": "Karten, Schlüssel und Cash — griffbereit." }
+    ]}
+  ],
+  "presets": [ { "name": "Icon features", "blocks": [
+    { "type": "feature", "settings": { "icon": "card", "title": "Bis zu 4 Karten", "text": "Karten, Schlüssel und Cash — griffbereit." } },
+    { "type": "feature", "settings": { "icon": "charge", "title": "Kabelloses Laden", "text": "MagSafe & Qi. Die Hülle bleibt drauf." } },
+    { "type": "feature", "settings": { "icon": "flat", "title": "Flach, wenn leer", "text": "Trägt nur auf, wenn du es willst." } }
+  ]}]
+}
+{% endschema %}

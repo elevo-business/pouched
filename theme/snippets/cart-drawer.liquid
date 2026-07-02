@@ -1,0 +1,14 @@
+<aside class="drawer" data-drawer aria-label="Warenkorb" aria-hidden="true">
+  <div class="drawer__hd">
+    <b>Warenkorb</b>
+    <button class="drawer__x" data-drawer-close aria-label="Schließen">&times;</button>
+  </div>
+  <div class="drawer__items" data-drawer-items>
+    <div class="drawer__empty">Dein Warenkorb ist leer.</div>
+  </div>
+  <div class="drawer__ft">
+    <div class="drawer__ship">{{ settings.free_ship_text }}</div>
+    <div class="row"><span>Zwischensumme</span><span data-drawer-total>{{ cart.total_price | money }}</span></div>
+    <a href="{{ routes.cart_url }}" class="btn btn--full">Zur Kasse</a>
+  </div>
+</aside>

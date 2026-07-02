@@ -1,0 +1,50 @@
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft__top">
+      <div class="ft__news">
+        <h3>{{ section.settings.news_title }}</h3>
+        <p>{{ section.settings.news_text }}</p>
+        {% form 'customer' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="ft__form">
+            <input type="email" name="contact[email]" placeholder="Deine E-Mail" aria-label="E-Mail" required>
+            <button type="submit" name="commit">Los</button>
+          </div>
+        {% endform %}
+      </div>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          <div class="ft__col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.title }}</h4>
+            {%- for link in block.settings.menu.links -%}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="ft__bot">
+      <span class="brand">{{ settings.logo_text }}</span>
+      <small>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }} · Impressum · Datenschutz · AGB</small>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "news_title", "label": "Newsletter title", "default": "Werde Teil von pouched." },
+    { "type": "textarea", "id": "news_text", "label": "Newsletter text", "default": "10% auf deine erste Bestellung, neue Farben zuerst." }
+  ],
+  "blocks": [
+    { "type": "menu", "name": "Menu column", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Shop" },
+      { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+    ]}
+  ],
+  "presets": [
+    { "name": "Footer", "blocks": [ { "type": "menu" }, { "type": "menu" }, { "type": "menu" } ] }
+  ]
+}
+{% endschema %}

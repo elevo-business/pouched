@@ -1,0 +1,29 @@
+<section class="fw" data-reveal style="{% if section.settings.height != blank %}height:{{ section.settings.height }}vh{% endif %}">
+  {%- if section.settings.image != blank -%}
+    <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="{{ section.settings.heading | escape }}" width="2000" height="1200">
+  {%- else -%}
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,var(--bg-soft),var(--accent))"></div>
+  {%- endif -%}
+  <div class="fw__scrim"></div>
+  <div class="fw__c">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2 class="h2">{{ section.settings.heading }}</h2>
+    {%- if section.settings.button_label != blank -%}
+      <p style="margin-top:24px"><a href="{{ section.settings.button_link }}" class="btn btn--big">{{ section.settings.button_label }}</a></p>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Image banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "range", "id": "height", "min": 40, "max": 90, "step": 2, "unit": "vh", "label": "Height", "default": 74 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Hände frei" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Deine Freiheit, von morgens bis nachts." },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Jetzt sichern" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [ { "name": "Image banner" } ]
+}
+{% endschema %}

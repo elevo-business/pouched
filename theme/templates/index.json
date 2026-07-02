@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "settings": {
+        "height": 82,
+        "eyebrow": "Die Handyhülle mit Fach",
+        "heading": "Alles dabei. Ohne Tasche.",
+        "button_label": "Jetzt entdecken",
+        "button_link": "shopify://products"
+      }
+    },
+    "features": { "type": "icon-features", "settings": { "heading": "Alles was zählt. Nichts was stört." } },
+    "split": { "type": "split-feature", "settings": {} },
+    "reviews": { "type": "reviews", "disabled": false, "settings": {} },
+    "faq": { "type": "faq", "settings": {} },
+    "cta": { "type": "cta", "settings": { "button_link": "shopify://products" } }
+  },
+  "order": ["hero", "features", "split", "reviews", "faq", "cta"]
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="{{ settings.color_bg }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>{{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+    {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+
+    {%- liquid
+      assign fh = settings.font_heading
+      assign fb = settings.font_body
+    -%}
+    {% style %}
+      {{ fh | font_face: font_display: 'swap' }}
+      {{ fb | font_face: font_display: 'swap' }}
+      {{ fh | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+      {{ fb | font_modify: 'weight', '600' | font_face: font_display: 'swap' }}
+      :root{
+        --font-heading: {{ fh.family }}, {{ fh.fallback_families }};
+        --font-body: {{ fb.family }}, {{ fb.fallback_families }};
+        --heading-transform: {{ settings.heading_transform }};
+        --heading-spacing: {{ settings.heading_spacing }}%;
+        --bg: {{ settings.color_bg }};
+        --bg-soft: {{ settings.color_bg_soft }};
+        --text: {{ settings.color_text }};
+        --muted: {{ settings.color_muted }};
+        --line: {{ settings.color_line }};
+        --accent: {{ settings.color_accent }};
+        --accent-dark: {{ settings.color_accent_dark }};
+        --btn-text: {{ settings.color_button_text }};
+        --dark: {{ settings.color_dark }};
+        --wrap: {{ settings.page_width }}px;
+        --radius: {{ settings.radius }}px;
+      }
+    {% endstyle %}
+
+    {{ content_for_header }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <script>window.__ROUTES__={cart_add:"{{ routes.cart_add_url }}",cart_change:"{{ routes.cart_change_url }}",cart:"{{ routes.cart_url }}"};window.__DRAWER__={{ settings.cart_drawer | json }};</script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </head>
+
+  <body class="tmpl-{{ request.page_type | handle }}">
+    <a class="skip" href="#MainContent">Zum Inhalt</a>
+    {% section 'announcement' %}
+    {% section 'header' %}
+    <main id="MainContent">{{ content_for_layout }}</main>
+    {% section 'footer' %}
+    {% render 'cart-drawer' %}
+    <div class="overlay" data-overlay hidden></div>
+    <div class="toast" data-toast></div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "b1": { "type": "bundle", "settings": { "qty": 1, "discount": 0, "label": "1 × POUCHED", "sublabel": "Für dich", "selected": true } },
+        "b2": { "type": "bundle", "settings": { "qty": 2, "discount": 15, "label": "2 × POUCHED", "sublabel": "Eine verschenken · spare 15%", "flag": "Beliebteste" } },
+        "b3": { "type": "bundle", "settings": { "qty": 3, "discount": 25, "label": "3 × POUCHED", "sublabel": "Für die Mädels · spare 25%", "flag": "Bester Preis" } },
+        "a1": { "type": "accordion", "settings": { "title": "Kompatibilität", "content": "Passgenau für iPhone 13 bis 17 — inkl. Plus, Pro & Pro Max." } },
+        "a2": { "type": "accordion", "settings": { "title": "Material & Pflege", "content": "Weiches Flüssigsilikon mit Mikrofaser-Innenseite. Abwaschbar, hautfreundlich, formstabil." } },
+        "a3": { "type": "accordion", "settings": { "title": "Versand & Rückgabe", "content": "Versand in 1–2 Werktagen, gratis ab 50 €. 30 Tage Geld-zurück, kostenloser Rückversand." } }
+      },
+      "block_order": ["b1", "b2", "b3", "a1", "a2", "a3"],
+      "settings": {}
+    },
+    "banner": { "type": "image-banner", "settings": { "eyebrow": "Hände frei", "heading": "Deine Freiheit, von morgens bis nachts." } },
+    "reviews": { "type": "reviews", "settings": {} },
+    "faq": { "type": "faq", "settings": {} }
+  },
+  "order": ["main", "banner", "reviews", "faq"]
+}

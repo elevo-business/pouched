@@ -1,0 +1,13 @@
+<section class="section"><div class="wrap">
+  <h1 class="h2" style="margin-bottom:30px">Kollektionen</h1>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+    {%- for collection in collections -%}
+      <a href="{{ collection.url }}" style="text-decoration:none;color:inherit">
+        <div style="border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;background:var(--bg-soft);margin-bottom:10px">
+          {%- if collection.featured_image -%}<img src="{{ collection.featured_image | image_url: width: 500 }}" alt="" style="width:100%;height:100%;object-fit:cover">{%- endif -%}
+        </div>
+        <b>{{ collection.title }}</b>
+      </a>
+    {%- endfor -%}
+  </div>
+</div></section>

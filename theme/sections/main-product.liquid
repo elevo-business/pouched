@@ -1,0 +1,186 @@
+{%- assign v = product.selected_or_first_available_variant -%}
+<section class="pdp" data-sticky-anchor>
+  <div class="wrap">
+    <div class="crumb"><a href="{{ routes.root_url }}">Home</a> / {{ product.title }}</div>
+    <div class="pdp__grid">
+
+      <!-- GALLERY -->
+      <div class="gallery">
+        <div class="gmain">
+          {%- if product.media.size > 0 -%}
+            <img data-gmain-img src="{{ product.featured_media | image_url: width: 1000 }}" alt="{{ product.title | escape }}" width="1000" height="1000">
+          {%- else -%}
+            <div style="padding:40px;text-align:center;color:var(--muted)">Produktbild hinzufügen</div>
+          {%- endif -%}
+          {%- if section.settings.badge != blank -%}<span class="gbadge">{{ section.settings.badge }}</span>{%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="thumbs">
+            {%- for m in product.media limit: 6 -%}
+              <button class="thumb" data-thumb data-src="{{ m | image_url: width: 1000 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+                <img src="{{ m | image_url: width: 140 }}" alt="" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- BUY BOX -->
+      <div class="buy">
+        <div class="buy__rate"><span class="stars" data-stars="5"></span> <span>{{ section.settings.rating_value }}</span> <a href="#reviews">{{ section.settings.rating_count }} Bewertungen</a></div>
+        <h1>{{ product.title }}</h1>
+        {%- if section.settings.subtitle != blank -%}<p class="buy__tag">{{ section.settings.subtitle }}</p>{%- endif -%}
+
+        <div class="price">
+          <b data-price>{{ v.price | money }}</b>
+          {%- if v.compare_at_price > v.price -%}<s data-compare>{{ v.compare_at_price | money }}</s>{%- else -%}<s data-compare></s>{%- endif -%}
+          {%- if v.compare_at_price > v.price -%}<span class="off">Spare {{ v.compare_at_price | minus: v.price | money }}</span>{%- endif -%}
+        </div>
+        {%- if section.settings.show_klarna -%}
+          <p class="klarna">Oder 3× <b>{{ v.price | divided_by: 3.0 | money }}</b> mit Klarna. 0% Zinsen.</p>
+        {%- endif -%}
+
+        <!-- OPTIONS -->
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            {%- assign oname = option.name | downcase -%}
+            <div class="opt">
+              {%- if oname contains 'farbe' or oname contains 'color' or oname contains 'colour' -%}
+                <div class="opt__label">{{ option.name }}: <span data-selected-{{ option.position }}>{{ option.selected_value }}</span></div>
+                <div class="swatches" data-opt="{{ option.position }}" role="group" aria-label="{{ option.name }}">
+                  {%- for value in option.values -%}
+                    {%- assign c = '#D9CFC7' -%}
+                    {%- assign vl = value | downcase -%}
+                    {%- case vl -%}
+                      {%- when 'blush' -%}{%- assign c = '#E7B7AC' -%}
+                      {%- when 'schwarz','black' -%}{%- assign c = '#23201E' -%}
+                      {%- when 'rosé','rose' -%}{%- assign c = '#D9A5A0' -%}
+                      {%- when 'mocha' -%}{%- assign c = '#9F6F54' -%}
+                      {%- when 'lavendel','lavender' -%}{%- assign c = '#C9C4EC' -%}
+                      {%- when 'sage' -%}{%- assign c = '#B7C9B0' -%}
+                      {%- when 'sky','blau' -%}{%- assign c = '#91C0E1' -%}
+                      {%- when 'sunshine','gelb' -%}{%- assign c = '#FFC400' -%}
+                      {%- when 'cherry' -%}{%- assign c = '#B14A5A' -%}
+                    {%- endcase -%}
+                    <button class="sw" style="background:{{ c }}" data-value="{{ value | escape }}" data-css="{{ c }}" aria-pressed="{% if value == option.selected_value %}true{% else %}false{% endif %}" aria-label="{{ value | escape }}"></button>
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                <div class="opt__label">{{ option.name }} <span>· wähle dein Modell</span></div>
+                <div class="models" data-opt="{{ option.position }}" role="group" aria-label="{{ option.name }}">
+                  {%- for value in option.values -%}
+                    <button class="model" data-value="{{ value | escape }}" aria-pressed="{% if value == option.selected_value %}true{% else %}false{% endif %}">{{ value }}</button>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <!-- BUNDLES -->
+        {%- assign bundleblocks = section.blocks | where: 'type', 'bundle' -%}
+        {%- if bundleblocks.size > 0 -%}
+          <div class="bundles" role="group" aria-label="Menge">
+            {%- for block in bundleblocks -%}
+              <button class="bundle" data-bundle data-qty="{{ block.settings.qty }}" data-off="{{ block.settings.discount }}" aria-pressed="{% if block.settings.selected %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>
+                {%- if block.settings.flag != blank -%}<span class="bundle__flag">{{ block.settings.flag }}</span>{%- endif -%}
+                <span class="bundle__radio"></span>
+                <span class="bundle__main"><b>{{ block.settings.label }}</b><small>{{ block.settings.sublabel }}</small></span>
+                <span class="bundle__price"><b>{{ v.price | times: block.settings.qty | times: 100 | minus: block.settings.discount | divided_by: 100 | round | money }}</b></span>
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <button class="btn btn--full btn--big" data-add data-default-variant="{{ v.id }}">In den Warenkorb · <span data-total>{{ v.price | money }}</span></button>
+
+        {%- if settings.show_express -%}
+          <div class="express">
+            <button class="xpay xpay--shop" data-add data-default-variant="{{ v.id }}">Shop Pay</button>
+            <button class="xpay xpay--pp" data-add data-default-variant="{{ v.id }}">PayPal</button>
+            <button class="xpay xpay--apple" data-add data-default-variant="{{ v.id }}"> Pay</button>
+          </div>
+        {%- endif -%}
+
+        {%- if settings.show_urgency -%}
+          <div class="stock"><i></i> {{ section.settings.stock_text }}</div>
+          <div class="stockbar"><i></i></div>
+          <div class="viewing">{{ section.settings.viewing_text }}</div>
+        {%- endif -%}
+
+        {%- if settings.show_trust -%}
+          <div class="trust">
+            <div><svg viewBox="0 0 24 24"><path d="M3 8h13l3 4v4h-3M3 8v9h3M6 17a2 2 0 1 0 4 0M16 17a2 2 0 1 0 4 0"/></svg> Gratis Versand ab 50 €</div>
+            <div><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9M3 12V5M3 12h7"/></svg> 30 Tage Rückgabe</div>
+            <div><svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4-3 7-7 9-4-2-7-5-7-9V7z"/></svg> 2 Jahre Garantie</div>
+            <div><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Sicher bezahlen</div>
+          </div>
+          <div class="pay"><span>VISA</span><span>MASTERCARD</span><span>PAYPAL</span><span>KLARNA</span><span>APPLE&nbsp;PAY</span></div>
+        {%- endif -%}
+
+        <div class="acc">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'accordion' -%}
+              <details {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary>{{ block.settings.title }}</summary>
+                <p>{{ block.settings.content }}</p>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if product.description != blank -%}
+            <details><summary>Beschreibung</summary><p>{{ product.description }}</p></details>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky" data-sticky>
+    <div><b>{{ product.title }}</b><small><span data-total>{{ v.price | money }}</span></small></div>
+    <button class="btn" data-add data-default-variant="{{ v.id }}">In den Warenkorb</button>
+  </div>
+</section>
+
+<script id="ProductJson" type="application/json">{{ product | json }}</script>
+<script>window.__CURRENCY__="{{ cart.currency.iso_code | default: shop.currency }}";</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Die Handyhülle mit dehnbarem Fach — für alles, was du liebst." },
+    { "type": "text", "id": "badge", "label": "Image badge", "default": "Bestseller · –22%" },
+    { "type": "header", "content": "Rating" },
+    { "type": "text", "id": "rating_value", "label": "Rating value", "default": "4,9" },
+    { "type": "text", "id": "rating_count", "label": "Rating count", "default": "12.480" },
+    { "type": "checkbox", "id": "show_klarna", "label": "Show Klarna line", "default": true },
+    { "type": "header", "content": "Urgency" },
+    { "type": "text", "id": "stock_text", "label": "Stock text", "default": "Fast ausverkauft — nur noch wenige verfügbar" },
+    { "type": "text", "id": "viewing_text", "label": "Viewing text", "default": "🔥 34 heute verkauft · 12 Frauen sehen es gerade an" }
+  ],
+  "blocks": [
+    { "type": "bundle", "name": "Bundle option", "settings": [
+      { "type": "range", "id": "qty", "min": 1, "max": 6, "step": 1, "label": "Quantity", "default": 1 },
+      { "type": "number", "id": "discount", "label": "Discount (% off)", "default": 0 },
+      { "type": "text", "id": "label", "label": "Label", "default": "1 × POUCHED" },
+      { "type": "text", "id": "sublabel", "label": "Sub-label", "default": "Für dich" },
+      { "type": "text", "id": "flag", "label": "Flag (optional)" },
+      { "type": "checkbox", "id": "selected", "label": "Selected by default", "default": false }
+    ]},
+    { "type": "accordion", "name": "Accordion", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Kompatibilität" },
+      { "type": "textarea", "id": "content", "label": "Content", "default": "Passgenau für iPhone 13 bis 17 — inkl. Plus, Pro & Pro Max." }
+    ]}
+  ],
+  "presets": [
+    { "name": "Product page", "blocks": [
+      { "type": "bundle", "settings": { "qty": 1, "discount": 0, "label": "1 × POUCHED", "sublabel": "Für dich", "selected": true } },
+      { "type": "bundle", "settings": { "qty": 2, "discount": 15, "label": "2 × POUCHED", "sublabel": "Eine verschenken · spare 15%", "flag": "Beliebteste" } },
+      { "type": "bundle", "settings": { "qty": 3, "discount": 25, "label": "3 × POUCHED", "sublabel": "Für die Mädels · spare 25%", "flag": "Bester Preis" } },
+      { "type": "accordion", "settings": { "title": "Kompatibilität", "content": "Passgenau für iPhone 13 bis 17 — inkl. Plus, Pro & Pro Max." } },
+      { "type": "accordion", "settings": { "title": "Material & Pflege", "content": "Weiches Flüssigsilikon mit Mikrofaser-Innenseite. Abwaschbar, hautfreundlich, formstabil." } },
+      { "type": "accordion", "settings": { "title": "Versand & Rückgabe", "content": "Versand in 1–2 Werktagen, gratis ab 50 €. 30 Tage Geld-zurück, kostenloser Rückversand." } }
+    ]}
+  ]
+}
+{% endschema %}

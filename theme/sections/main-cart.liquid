@@ -1,0 +1,31 @@
+<section class="section"><div class="wrap" style="max-width:900px">
+  <h1 class="h2" style="margin-bottom:24px">Warenkorb</h1>
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post">
+      {%- for item in cart.items -%}
+        <div class="ci" style="align-items:center">
+          <img src="{{ item.image | image_url: width: 140 }}" alt="{{ item.product.title | escape }}">
+          <div class="ci__m" style="flex:1">
+            <b>{{ item.product.title }}</b>
+            {%- unless item.variant.title contains 'Default' -%}<div class="v">{{ item.variant.title }}</div>{%- endunless -%}
+            <div style="margin-top:6px">{{ item.original_line_price | money }}</div>
+          </div>
+          <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Menge" style="width:64px;padding:8px;border:1px solid var(--line);border-radius:8px">
+        </div>
+      {%- endfor -%}
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:24px">
+        <div><b style="font-size:20px">Summe: {{ cart.total_price | money }}</b><div class="muted" style="font-size:13px">{{ settings.free_ship_text }}</div></div>
+        <div style="display:flex;gap:10px">
+          <button type="submit" name="update" class="btn btn--ghost">Aktualisieren</button>
+          <button type="submit" name="checkout" class="btn">Zur Kasse</button>
+        </div>
+      </div>
+    </form>
+  {%- else -%}
+    <p class="sub">Dein Warenkorb ist leer.</p>
+    <p style="margin-top:20px"><a href="{{ routes.all_products_collection_url }}" class="btn">Weiter shoppen</a></p>
+  {%- endif -%}
+</div></section>
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

@@ -1,0 +1,26 @@
+{
+  "current": {
+    "color_bg": "#FBF6F1",
+    "color_bg_soft": "#FCEFEA",
+    "color_text": "#2A211E",
+    "color_muted": "#8A7A73",
+    "color_line": "#EADFD7",
+    "color_accent": "#C86A5E",
+    "color_accent_dark": "#A2483D",
+    "color_button_text": "#FFFFFF",
+    "color_dark": "#2A211E",
+    "font_heading": "poppins_n6",
+    "font_body": "assistant_n4",
+    "heading_transform": "none",
+    "heading_spacing": -2,
+    "page_width": 1140,
+    "radius": 18,
+    "logo_text": "pouched.",
+    "logo_size": 27,
+    "show_express": true,
+    "show_urgency": true,
+    "show_trust": true,
+    "cart_drawer": true,
+    "free_ship_text": "Kostenloser Versand ab 50 €"
+  }
+}

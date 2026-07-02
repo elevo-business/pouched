@@ -1,0 +1,9 @@
+{
+  "general": {
+    "meta": { "tags": "Tagged \"{{ tags }}\"", "page": "Page {{ page }}" },
+    "search": { "title": "Search", "placeholder": "Search…", "submit": "Search" },
+    "404": { "title": "Page not found", "back": "Back to home" }
+  },
+  "cart": { "title": "Cart", "empty": "Your cart is empty", "checkout": "Checkout", "subtotal": "Subtotal", "update": "Update" },
+  "products": { "product": { "add_to_cart": "Add to cart", "sold_out": "Sold out", "quantity": "Quantity" } }
+}

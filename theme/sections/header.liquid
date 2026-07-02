@@ -1,0 +1,43 @@
+<header class="hd">
+  <div class="wrap hd__in">
+    <a href="{{ routes.root_url }}" class="brand" style="font-size:{{ settings.logo_size }}px">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" style="height:{{ settings.logo_size | plus: 6 }}px;width:auto">
+      {%- else -%}
+        {{ settings.logo_text }}
+      {%- endif -%}
+    </a>
+
+    <nav class="nav">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="hd__r">
+      <a href="{{ routes.cart_url }}" class="icon-btn" data-cart-open aria-label="Warenkorb">
+        <svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7zM9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="cnt" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+      <button class="icon-btn burger" data-menu-open aria-label="Menü">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="msheet" data-sheet>
+  <button class="msheet__x" data-menu-close aria-label="Schließen">&times;</button>
+  {%- for link in section.settings.menu.links -%}
+    <a href="{{ link.url }}" data-menu-close>{{ link.title }}</a>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}
