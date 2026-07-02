@@ -1,0 +1,443 @@
+<style>
+  /* ============ JOEY — Brand Foundation ============ */
+  :root{
+    --ink:#17140E;        /* warm near-black */
+    --ink-2:#221E16;
+    --bone:#ECE5D6;       /* warm light */
+    --paper:#F4EFE4;      /* lighter warm */
+    --roo:#C4844A;        /* caramel — the one accent */
+    --roo-deep:#94582B;
+    --stone:#8C8272;      /* mid taupe */
+    --line:rgba(23,20,14,.14);
+    --line-on-dark:rgba(236,229,214,.16);
+    --disp:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+    --mono:"SF Mono",ui-monospace,"Roboto Mono",Menlo,monospace;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{margin:0}
+  .doc{
+    font-family:var(--disp);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  section{padding:104px 0}
+  @media(max-width:640px){section{padding:72px 0}.wrap{padding:0 22px}}
+
+  .eyebrow{
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    font-weight:600;color:var(--roo-deep);margin:0 0 20px;
+  }
+  .on-dark .eyebrow{color:var(--roo)}
+  h2.big{
+    font-size:clamp(30px,5vw,54px);line-height:1.02;letter-spacing:-.02em;
+    font-weight:700;margin:0;text-wrap:balance;
+  }
+  p.lead{font-size:clamp(19px,2.3vw,24px);line-height:1.42;max-width:34ch;color:var(--ink-2);font-weight:400}
+  .muted{color:var(--stone)}
+  hr.rule{border:0;border-top:1px solid var(--line);margin:0}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--ink);color:var(--bone);
+    min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .hero .wrap{width:100%}
+  .hero-top{
+    position:absolute;top:0;left:0;right:0;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:26px 32px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--stone);
+  }
+  @media(max-width:640px){.hero-top{padding:20px 22px}}
+  .hero-top b{color:var(--bone);font-weight:600}
+
+  .mark{
+    display:inline-flex;align-items:baseline;gap:.01em;
+    font-weight:700;letter-spacing:-.045em;line-height:.8;
+    font-size:clamp(96px,22vw,240px);
+    cursor:default;user-select:none;
+  }
+  /* the pouch-o */
+  .pouch{
+    position:relative;display:inline-block;
+    width:.72em;height:.72em;margin:0 .01em;
+    align-self:center;
+  }
+  .pouch .shell{
+    position:absolute;inset:0;border-radius:50%;
+    background:var(--ink);
+    border:.11em solid var(--bone);
+    transition:transform .55s cubic-bezier(.34,1.3,.5,1),border-radius .55s ease;
+    transform-origin:50% 42%;
+    overflow:hidden;
+  }
+  .pouch .fill{
+    position:absolute;left:0;right:0;bottom:0;height:0%;
+    background:var(--roo);
+    transition:height .55s cubic-bezier(.34,1.2,.5,1);
+  }
+  .pouch .card{
+    position:absolute;left:22%;right:22%;bottom:-40%;height:46%;border-radius:.06em;
+    background:var(--bone);opacity:0;
+    transition:bottom .55s cubic-bezier(.34,1.3,.5,1),opacity .4s ease;
+  }
+  .mark:hover .shell,.mark.swell .shell{transform:scaleY(1.3) translateY(.02em);border-radius:46% 46% 50% 50%/40% 40% 60% 60%}
+  .mark:hover .fill,.mark.swell .fill{height:58%}
+  .mark:hover .card,.mark.swell .card{bottom:14%;opacity:1}
+
+  .hero-tag{margin:38px 0 0;font-size:clamp(20px,2.6vw,30px);font-weight:500;letter-spacing:-.01em;color:var(--bone)}
+  .hero-sub{margin:14px 0 0;color:var(--stone);max-width:40ch;font-size:16px}
+  .scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone)}
+
+  /* ---------- generic grids ---------- */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .grid-lede{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+  @media(max-width:760px){.grid2,.grid-lede{grid-template-columns:1fr;gap:32px}}
+
+  .statement{font-size:clamp(26px,4.4vw,46px);line-height:1.12;letter-spacing:-.02em;font-weight:600;text-wrap:balance;margin:0}
+  .statement .hl{color:var(--roo-deep)}
+
+  /* ---------- palette ---------- */
+  .swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:8px;border:1px solid var(--line)}
+  @media(max-width:640px){.swatches{grid-template-columns:1fr 1fr}}
+  .sw{padding:22px 20px 18px;min-height:170px;display:flex;flex-direction:column;justify-content:flex-end}
+  .sw .nm{font-weight:600;font-size:15px}
+  .sw .hx{font-family:var(--mono);font-size:12px;letter-spacing:.02em;margin-top:3px;opacity:.8}
+  .sw .role{font-size:12px;margin-top:10px;opacity:.72;line-height:1.35}
+
+  /* ---------- type specimen ---------- */
+  .spec{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line)}
+  .spec .row{display:flex;align-items:baseline;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .spec .row .meta{font-family:var(--mono);font-size:11px;color:var(--stone);width:150px;flex:none;letter-spacing:.02em}
+  .spec .sample{letter-spacing:-.02em;line-height:1}
+
+  /* ---------- voice table ---------- */
+  .voice{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+  .voice .vr{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:22px 0;border-bottom:1px solid var(--line)}
+  @media(max-width:640px){.voice .vr{grid-template-columns:1fr;gap:8px}}
+  .voice .them{color:var(--stone);text-decoration:line-through;text-decoration-color:rgba(140,130,114,.5);font-size:17px}
+  .voice .us{font-size:19px;font-weight:500;letter-spacing:-.01em}
+  .voice .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);margin-bottom:14px}
+
+  /* ---------- colorways ---------- */
+  .cways{display:grid;grid-template-columns:repeat(6,1fr);gap:20px;margin-top:8px}
+  @media(max-width:760px){.cways{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:420px){.cways{grid-template-columns:repeat(2,1fr)}}
+  .cw{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .case{
+    width:78px;height:118px;border-radius:20px;position:relative;
+    border:1px solid rgba(23,20,14,.10);
+    box-shadow:0 8px 22px rgba(23,20,14,.10);
+  }
+  .case::before{/* camera */
+    content:"";position:absolute;top:11px;left:11px;width:26px;height:26px;border-radius:8px;
+    background:rgba(23,20,14,.16);
+  }
+  .case::after{/* pouch seam */
+    content:"";position:absolute;left:14px;right:14px;bottom:16px;height:44px;border-radius:14px;
+    border:1px solid rgba(23,20,14,.18);
+  }
+  .cw .nm{font-weight:600;font-size:14px}
+  .cw .hx{font-family:var(--mono);font-size:11px;color:var(--stone)}
+
+  /* ---------- art direction frames ---------- */
+  .frames{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:8px}
+  @media(max-width:760px){.frames{grid-template-columns:1fr 1fr}}
+  @media(max-width:460px){.frames{grid-template-columns:1fr}}
+  .frame{aspect-ratio:4/5;border:1px solid var(--line);display:flex;align-items:flex-end;padding:16px;position:relative;overflow:hidden}
+  .frame .cap{font-size:12px;color:var(--stone);position:relative;z-index:2;line-height:1.35}
+  .frame .tag{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--roo-deep);z-index:2}
+
+  /* ---------- packaging ---------- */
+  .box{
+    background:var(--ink);color:var(--bone);border-radius:6px;
+    aspect-ratio:5/3;display:flex;flex-direction:column;justify-content:space-between;
+    padding:26px;position:relative;overflow:hidden;
+  }
+  .box .bm{font-weight:700;letter-spacing:-.04em;font-size:34px;display:flex;align-items:center}
+  .box .bo{display:inline-block;width:.62em;height:.62em;border:.1em solid var(--bone);border-radius:44% 44% 50% 50%/38% 38% 60% 60%;margin:0 .02em}
+  .box .bc{font-size:12px;color:var(--stone);letter-spacing:.02em;max-width:26ch}
+  .box .emboss{position:absolute;right:-30px;bottom:-46px;width:200px;height:200px;border-radius:50%;border:1px solid var(--line-on-dark)}
+
+  /* ---------- footer ---------- */
+  .signoff{background:var(--ink);color:var(--bone);text-align:center;padding:120px 0}
+  .signoff .mk{font-weight:700;letter-spacing:-.045em;font-size:clamp(56px,13vw,120px);line-height:.85}
+  .signoff .mk .bo{display:inline-block;width:.6em;height:.6em;border:.1em solid var(--bone);border-radius:44% 44% 50% 50%/38% 38% 60% 60%;vertical-align:baseline;position:relative;top:.02em}
+  .signoff .cl{margin-top:26px;color:var(--roo);font-size:19px;letter-spacing:.02em}
+  .signoff .fine{margin-top:40px;color:var(--stone);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+
+  .kicker{font-size:13px;letter-spacing:.02em;color:var(--stone);max-width:52ch;line-height:1.6}
+  .idx{font-family:var(--mono);font-size:11px;color:var(--roo-deep);letter-spacing:.1em;margin-bottom:18px;display:block}
+
+  @media(prefers-reduced-motion:reduce){
+    .pouch .shell,.pouch .fill,.pouch .card{transition:none}
+  }
+</style>
+
+<div class="doc">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero on-dark">
+    <div class="hero-top">
+      <span><b>joey</b> — brand foundation</span>
+      <span>v1 · 2026</span>
+    </div>
+    <div class="wrap">
+      <div class="mark" id="mark" aria-label="joey">
+        j<span class="pouch" aria-hidden="true"><span class="shell"><span class="fill"></span><span class="card"></span></span></span>ey
+      </div>
+      <p class="hero-tag">Carry what matters.</p>
+      <p class="hero-sub">The expandable phone case, taken seriously. It holds what a bag holds — then disappears when it&rsquo;s empty.</p>
+    </div>
+    <span class="scroll-hint">the pouch, on hover ↑ · scroll</span>
+  </section>
+
+  <!-- ============ THE IDEA ============ -->
+  <section>
+    <div class="wrap grid-lede">
+      <div>
+        <span class="idx">01 — Positioning</span>
+        <p class="eyebrow">The idea</p>
+      </div>
+      <div>
+        <p class="statement">One material that <span class="hl">adapts to you</span>, instead of the other way around. Flat when there&rsquo;s nothing to carry. There the moment there is.</p>
+        <p class="kicker" style="margin-top:28px">Everyone else sells a gadget with a party-trick. We sell the quiet end of it: an everyday object that solves the oldest carry problem — slim <em>or</em> enough room — by refusing to choose. That&rsquo;s not marketing. It&rsquo;s the product. Our whole job as a brand is to take it as seriously as it deserves.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ THE NAME ============ -->
+  <section>
+    <div class="wrap grid-lede">
+      <div>
+        <span class="idx">02 — Name</span>
+        <p class="eyebrow">Why joey</p>
+      </div>
+      <div>
+        <h2 class="big">A joey is the one carried in the pouch.</h2>
+        <p class="kicker" style="margin-top:26px">A joey is a baby kangaroo — the thing a marsupial keeps close, protected, always within reach. The name turns the attention away from the mechanism and onto <em>what you keep</em>: your card, your key, the one thing you can&rsquo;t lose. Warm, protective, precise. It works in German and English, it&rsquo;s three letters longer than a logo needs to be, and it never says &ldquo;kangaroo pouch&rdquo; out loud — it just knows.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ LOGO ============ -->
+  <section>
+    <div class="wrap">
+      <span class="idx">03 — Wordmark</span>
+      <div class="grid2">
+        <div>
+          <h2 class="big">The o is the pouch.</h2>
+          <p class="kicker" style="margin-top:24px">Lowercase, tight, confident — a warm grotesque, not a luxury serif. The single ownable move is the second letter: the <b>o</b> is drawn slightly heavier at its base and rounds into a pouch, as if something is resting inside it. In motion it swells; at rest it settles into a soft ellipse. That one detail is the whole brand in a glyph.</p>
+          <ul class="kicker" style="margin-top:24px;padding-left:18px;line-height:1.9">
+            <li>Clearspace = the height of the <b>o</b> on every side.</li>
+            <li>Never outline, gradient, stretch, or drop-shadow the mark.</li>
+            <li>Bone on ink, or ink on bone. The caramel is for accents — never the wordmark.</li>
+          </ul>
+        </div>
+        <div style="border:1px solid var(--line);aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--bone)">
+          <div class="mark" style="color:var(--ink);font-size:clamp(72px,15vw,150px)">j<span class="pouch"><span class="shell" style="background:var(--bone);border-color:var(--ink)"><span class="fill"></span><span class="card" style="background:var(--ink)"></span></span></span>ey</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ PALETTE ============ -->
+  <section>
+    <div class="wrap">
+      <span class="idx">04 — Colour</span>
+      <div class="grid-lede" style="margin-bottom:34px">
+        <p class="eyebrow">The system</p>
+        <p class="lead" style="max-width:40ch">A graphite backbone, a warm bone, and exactly one accent. Not six pastels — restraint is the point. The warmth carries the silicone; the caramel is the signature, used sparingly enough that it always means something.</p>
+      </div>
+      <div class="swatches">
+        <div class="sw" style="background:var(--ink);color:var(--bone)">
+          <div class="nm">Ink</div><div class="hx">#17140E</div>
+          <div class="role">Grounds, packaging, wordmark. Warm near-black — never pure #000.</div>
+        </div>
+        <div class="sw" style="background:var(--bone);color:var(--ink)">
+          <div class="nm">Bone</div><div class="hx">#ECE5D6</div>
+          <div class="role">Primary light surface. Warm, tactile, the everyday canvas.</div>
+        </div>
+        <div class="sw" style="background:var(--roo);color:#fff">
+          <div class="nm">Roo</div><div class="hx">#C4844A</div>
+          <div class="role">The one accent. Caramel with kangaroo warmth. Sparingly.</div>
+        </div>
+        <div class="sw" style="background:var(--roo-deep);color:#fff">
+          <div class="nm">Roo Deep</div><div class="hx">#94582B</div>
+          <div class="role">Accent for small text on light. Meets contrast.</div>
+        </div>
+        <div class="sw" style="background:var(--stone);color:#fff">
+          <div class="nm">Stone</div><div class="hx">#8C8272</div>
+          <div class="role">Captions, secondary type, hairlines. Warm taupe grey.</div>
+        </div>
+        <div class="sw" style="background:var(--paper);color:var(--ink)">
+          <div class="nm">Paper</div><div class="hx">#F4EFE4</div>
+          <div class="role">Lightest surface, for long-form reading and spec sheets.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ TYPE ============ -->
+  <section>
+    <div class="wrap">
+      <span class="idx">05 — Typography</span>
+      <div class="grid-lede" style="margin-bottom:30px">
+        <p class="eyebrow">One family, set well</p>
+        <p class="lead" style="max-width:42ch">A neutral grotesque, tuned with tight tracking on the big sizes and generous air around the small ones — the Apple move, not the boutique-serif move. Ship-ready with a system stack; the licensed target is a Neue-Haas / Söhne-class grotesque for headlines and a humanist companion for long copy.</p>
+      </div>
+      <div class="spec">
+        <div class="row"><span class="meta">Display · 700 · -4.5%</span><span class="sample" style="font-size:clamp(34px,7vw,72px);font-weight:700">Carry what matters</span></div>
+        <div class="row"><span class="meta">Headline · 600 · -2%</span><span class="sample" style="font-size:clamp(24px,4vw,40px);font-weight:600">It holds. Then it hides.</span></div>
+        <div class="row"><span class="meta">Lead · 400</span><span class="sample" style="font-size:22px;font-weight:400;line-height:1.35">Room, on demand — for the things you&rsquo;d rather not carry in a bag.</span></div>
+        <div class="row"><span class="meta">Body · 400 · 1.5</span><span class="sample" style="font-size:16px;font-weight:400;line-height:1.5;max-width:40ch">Flat against your phone when it&rsquo;s empty. A soft, expandable pouch the moment you slip a card, a key, or a folded note inside.</span></div>
+        <div class="row"><span class="meta">Label · 600 · +18%</span><span class="sample" style="font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase">Adaptive carry</span></div>
+        <div class="row"><span class="meta">Spec · mono</span><span class="sample" style="font-family:var(--mono);font-size:14px;letter-spacing:0">iPhone 12–17 · 4 g · holds 1–4 cards</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ VOICE ============ -->
+  <section>
+    <div class="wrap">
+      <span class="idx">06 — Voice</span>
+      <div class="grid-lede" style="margin-bottom:30px">
+        <p class="eyebrow">How we talk</p>
+        <p class="lead" style="max-width:40ch">Same product, opposite register. They shout the trick. We state the fact and stop. Calm, exact, a little dry — the confidence to under-explain.</p>
+      </div>
+      <div class="voice">
+        <div class="vr" style="border-top:0"><div class="lbl">Them — Ninja Labs</div><div class="lbl">Us — joey</div></div>
+        <div class="vr"><div class="them">&ldquo;More like a Kangaroo Pouch!&rdquo;</div><div class="us">There&rsquo;s room in here.</div></div>
+        <div class="vr"><div class="them">&ldquo;The Phone Case of the Future&rdquo;</div><div class="us">Your phone, and everything you&rsquo;d otherwise carry.</div></div>
+        <div class="vr"><div class="them">&ldquo;Not a Phone Wallet&rdquo;</div><div class="us">It holds what a wallet holds. It just disappears when empty.</div></div>
+        <div class="vr"><div class="them">&ldquo;Designed in Los Angeles&rdquo;</div><div class="us">Designed to carry less.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ ART DIRECTION ============ -->
+  <section>
+    <div class="wrap">
+      <span class="idx">07 — Art direction</span>
+      <div class="grid-lede" style="margin-bottom:30px">
+        <p class="eyebrow">Photography</p>
+        <p class="lead" style="max-width:42ch">The object, ernst genommen. Studio light, warm shadow, macro on the material. The hero shot is always the same moment: the pouch stretching, or snapping back. No festival wristbands, no grinning models — the product is the star.</p>
+      </div>
+      <div class="frames">
+        <div class="frame" style="background:linear-gradient(160deg,#26221A,#17140E)"><span class="tag">Hero</span><span class="cap" style="color:var(--bone)">Macro. The pouch mid-stretch, a single card easing in. 85mm, one warm key light, deep shadow.</span></div>
+        <div class="frame" style="background:linear-gradient(160deg,#ECE5D6,#D9CFBB)"><span class="tag">Empty vs. full</span><span class="cap">Two frames, same case: flat and unnoticed / swelled and holding. The whole promise in a pair.</span></div>
+        <div class="frame" style="background:linear-gradient(160deg,#C4844A,#94582B)"><span class="tag" style="color:#fff">In hand</span><span class="cap" style="color:#fff">Cropped tight — thumb pressing the pouch closed. Skin, silicone, texture. Never a full body.</span></div>
+      </div>
+      <p class="kicker" style="margin-top:20px">Rule of thumb: if a competitor could run the same photo, reshoot it. Ours are recognisable from the light and the restraint alone.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ PACKAGING ============ -->
+  <section>
+    <div class="wrap">
+      <span class="idx">08 — Packaging</span>
+      <div class="grid2">
+        <div>
+          <h2 class="big">Half the value is in the opening.</h2>
+          <p class="kicker" style="margin-top:24px">Matte ink box, debossed mark, no photo on the lid. Inside: the case seated in a warm bone tray, a single printed card, one sentence. Cents to produce, luxury to open — the same lever Apple pulls. The unboxing is the first time the brand touches the customer&rsquo;s hands; it should feel heavier than €70.</p>
+          <p class="kicker" style="margin-top:18px;color:var(--roo-deep)">Card copy: &ldquo;Fill it, or don&rsquo;t. It&rsquo;s ready either way.&rdquo;</p>
+        </div>
+        <div class="box">
+          <div class="bm">j<span class="bo"></span>ey</div>
+          <div class="emboss"></div>
+          <div class="bc">Adaptive carry · Colour: Graphite · iPhone 15</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ RANGE ============ -->
+  <section>
+    <div class="wrap">
+      <span class="idx">09 — The range</span>
+      <div class="grid-lede" style="margin-bottom:34px">
+        <p class="eyebrow">One object, six colours</p>
+        <p class="lead" style="max-width:40ch">Apple-simple: a single product, offered in muted, grown-up colourways — the deliberate opposite of the pastel wall. Named like paint, not candy. Two capacities: <b>joey</b> and <b>joey&nbsp;pro</b> (deeper pouch, dual pocket).</p>
+      </div>
+      <div class="cways">
+        <div class="cw"><div class="case" style="background:#2A2622"></div><div class="nm">Graphite</div><div class="hx">#2A2622</div></div>
+        <div class="cw"><div class="case" style="background:#ECE5D6"></div><div class="nm">Bone</div><div class="hx">#ECE5D6</div></div>
+        <div class="cw"><div class="case" style="background:#C4844A"></div><div class="nm">Clay</div><div class="hx">#C4844A</div></div>
+        <div class="cw"><div class="case" style="background:#8E9A83"></div><div class="nm">Sage</div><div class="hx">#8E9A83</div></div>
+        <div class="cw"><div class="case" style="background:#CBB79B"></div><div class="nm">Dune</div><div class="hx">#CBB79B</div></div>
+        <div class="cw"><div class="case" style="background:#6E7A83"></div><div class="nm">Fog</div><div class="hx">#6E7A83</div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ TAGLINES ============ -->
+  <section>
+    <div class="wrap">
+      <span class="idx">10 — Tagline system</span>
+      <div class="grid2">
+        <div>
+          <p class="eyebrow">Primary</p>
+          <p class="statement" style="margin-bottom:34px">Carry what matters.</p>
+          <p class="eyebrow">Supporting</p>
+          <p class="kicker" style="line-height:2.2;font-size:16px">
+            Adaptive carry.<br>
+            It holds. Then it hides.<br>
+            Room, on demand.<br>
+            Flat when empty. There when it counts.<br>
+            Everything you&rsquo;d otherwise carry.
+          </p>
+        </div>
+        <div>
+          <p class="eyebrow">In one paragraph</p>
+          <p class="kicker" style="font-size:16px">joey is an expandable phone case with a soft silicone pouch built into the back. Empty, it lies flat and forgotten. Fill it — a card, a key, a folded note — and it quietly swells to hold them. It replaces the wallet and, most days, the bag. Same clever object everyone&rsquo;s discovering; taken seriously, made warm, and built to be kept.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SIGN OFF ============ -->
+  <section class="signoff">
+    <div class="mk">j<span class="bo"></span>ey</div>
+    <p class="cl">Carry what matters.</p>
+    <p class="fine">Brand foundation · v1 · 2026</p>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    var mark=document.getElementById('mark');
+    if(!mark) return;
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce) return;
+    // one-time intro swell on load
+    setTimeout(function(){
+      mark.classList.add('swell');
+      setTimeout(function(){mark.classList.remove('swell');},1400);
+    },650);
+  })();
+</script>
